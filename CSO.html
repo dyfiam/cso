@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>9TH CONGRESS</title>
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+    body, html {
+      font-family: Arial, sans-serif;
+      height: 100%;
+      background-color: #8B0000; /* dark red */
+      color: #ffd700; /* gold */
+    }
+    header {
+      background: rgba(128, 0, 0, 0.9);
+      color: #ffd700;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      font-weight: 700;
+      font-size: 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    nav {
+      background-color: #800000;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      padding: 1rem 0;
+      position: sticky;
+      top: 3.5rem; /* below header */
+      z-index: 999;
+    }
+    nav a {
+      background-color: #5a0000;
+      color: #ffd700;
+      text-decoration: none;
+      padding: 0.6rem 1.3rem;
+      border-radius: 8px;
+      border: 2px solid #ffd700;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+    nav a:hover {
+      background-color: #b22222;
+      color: white;
+    }
+    section {
+      min-height: 100vh;
+      padding: 3rem 1rem 5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background-color: #8B0000;
+      transition: opacity 0.5s ease;
+    }
+    section.hidden {
+      opacity: 0;
+      pointer-events: none;
+      height: 0;
+      overflow: hidden;
+      position: fixed;
+      width: 100%;
+      top: 0; left: 0;
+      background-color: #8B0000;
+      padding: 0;
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      transition: opacity 0.5s ease;
+    }
+    #main h2 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+    #main p {
+      font-size: 1.3rem;
+      max-width: 700px;
+      line-height: 1.6;
+      margin: 0 auto;
+      color: #ffd700;
+    }
+    /* Play Music Button Style in flow and centered */
+    #play-music {
+      margin: 0 0 2rem 0;
+      background: #800000;
+      color: #ffd700;
+      border: none;
+      padding: 0.5rem 1.5rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+      user-select: none;
+      display: inline-block;
+    }
+    #play-music:hover {
+      background-color: #b22222;
+      color: white;
+    }
+    #individual-section-buttons h2 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.5rem;
+      width: 100%;
+      max-width: 1100px;
+      padding: 0 1rem;
+    }
+    .card {
+      background: rgba(128,0,0,0.8);
+      border: 2px solid #ffd700;
+      border-radius: 12px;
+      padding: 1rem;
+      cursor: pointer;
+      color: #ffd700;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      user-select: none;
+    }
+    .card:hover {
+      background-color: #b22222;
+      color: white;
+    }
+    .card img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 0.8rem;
+      background-color: #500000;
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+    .individual-section {
+      max-width: 700px;
+      padding: 2rem 1rem;
+      background-color: rgba(128,0,0,0.85);
+      border-radius: 15px;
+      color: #fff5e1;
+      box-shadow: 0 0 15px #ffd700a0;
+      margin: 3rem auto;
+      text-align: center;
+    }
+    .individual-section h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+      color: #ffd700;
+      text-align: center;
+    }
+    .individual-section p {
+      font-size: 1.15rem;
+      line-height: 1.5;
+      margin-bottom: 2rem;
+      white-space: pre-wrap;
+    }
+    .back-button {
+      display: inline-block;
+      background-color: #5a0000;
+      border: 2px solid #ffd700;
+      color: #ffd700;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+      user-select: none;
+      cursor: pointer;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .back-button:hover {
+      background-color: #b22222;
+      color: white;
+    }
+    .heart {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Red_heart_icon.svg/1024px-Red_heart_icon.svg.png') no-repeat center center;
+      background-size: contain;
+      animation: floatUp 6s infinite ease-in;
+      z-index: 9999;
+      opacity: 0.8;
+      pointer-events: none;
+      user-select: none;
+    }
+    @keyframes floatUp {
+      0% {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh);
+        opacity: 0;
+      }
+    }
+    @media (max-width: 480px) {
+      nav {
+        flex-direction: column;
+        gap: 0.6rem;
+      }
+      .card-grid {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      }
+      header {
+        font-size: 1.2rem;
+      }
+      .individual-section {
+        margin: 2rem 1rem;
+        padding: 1.5rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    TO MY 9TH
+  </header>
+
+  <nav>
+    <a href="#main">Home</a>
+    <a href="#individual-section-buttons">Individual</a>
+  </nav>
+
+
+  <section id="main">
+    <button id="play-music">Press Before You Read Hehe</button>
+    <h2>To My 9th Congress,</h2>
+    <p>
+     You've become more than just an organization to me - you're my second family. The laughter, tears, and countless moments of growth we've experienced together have forever changed me in ways that I'll be grateful for.
+
+In the midst of chaos, you were my peace. Your love, support, and encouragement gave me strength when I felt weak and hopeless. Your presence in my life reminded me that I wasn't alone, that I'm part of something bigger than myself, and that I wasn't hard to love and understand.
+
+The bond we've formed is more than just mere acquaintances; it's a deep, unbreakable connection that will stay with me forever. You've seen me at my worst and at my best, and yet, you've loved me unconditionally. You've pushed me to be my best self, to serve with passion, and to love without limits.
+
+As we move forward in life and you find your new sense of purpose, I want you to know that you'll always be a part of me. Your stories, struggles, and achievements will forever be etched in my heart. I'll carry the lessons we've learned, the laughter we've shared, and the tears we've dried together with me wherever I go.
+
+Thank you for being my family, my support system, and my source of strength. I love you all more than words can express. Wherever life takes us, know that our bond will remain unbroken, a testament to the love and connection we've shared. Every achievement of mine, just know that you guys were a part of making it possible.
+<br>
+
+With the biggest love,
+<br>
+11 TVL&AD REP </br>
+Cashmere Escarda💞</br>
+    </p>
+  </section>
+
+ 
+  <section id="individual-section-buttons">
+    <h2>Individual Messages</h2>
+    <div class="card-grid">
+      <a href="#message1" class="card">
+        <img src="https://raw.githubusercontent.com/dyfiam/cso/refs/heads/main/c5c976da-c43d-4286-b902-c7cfae3923c8.jfif" alt="Picture 1" />
+        <div class="card-title">MS. CHERYL</div>
+      </a>
+      <a href="#message2" class="card">
+        <img src="https://raw.githubusercontent.com/dyfiam/cso/refs/heads/main/32904df5-6bdc-4f08-bb5a-5c23a768135f.jfif" alt="Message 2" />
+        <div class="card-title">YOHAN</div>
+      </a>
+      <a href="#message3" class="card">
+        <img src="https://raw.githubusercontent.com/dyfiam/cso/refs/heads/main/9f9cb4fd-8e03-4659-b72f-24d5ed3dcb0e.jfif" alt="Message 3" />
+        <div class="card-title">KATRINA</div>
+      </a>
+      <a href="#message4" class="card">
+        <img src="https://raw.githubusercontent.com/dyfiam/cso/refs/heads/main/735bb8bf-414a-44b6-9a1c-95c07b04346c.jfif" alt="Message 4" />
+        <div class="card-title">KLAIZA</div>
+      </a>
+      <a href="#message5" class="card">
+        <img src="https://raw.githubusercontent.com/dyfiam/cso/refs/heads/main/493ea1ca-d5ef-4cdc-9c7e-d4183ffc1e92.jfif" alt="Message 5" />
+        <div class="card-title">FIONAH</div>
+      </a>
+      <a href="#message6" class="card">
+        <img src="https://raw.githubusercontent.com/dyfiam/cso/refs/heads/main/651efc0d-e023-446f-a788-69dd8a96cd77.jfif" alt="Message 6" />
+        <div class="card-title">JENNY</div>
+      </a>
+      <a href="#message7" class="card">
+        <img src="https://github.com/dyfiam/cso/blob/main/hannaur.png?raw=true" alt="Message 7" />
+        <div class="card-title">HANNAH</div>
+      </a>
+      <a href="#message8" class="card">
+        <img src="https://raw.githubusercontent.com/dyfiam/cso/refs/heads/main/fb44f7c9-9424-412d-9944-122d7358a6d2.jfif" alt="Message 8" />
+        <div class="card-title">RICHARD</div>
+      </a>
+      <a href="#message9" class="card">
+        <img src="https://raw.githubusercontent.com/dyfiam/cso/refs/heads/main/bb9ebfed-ec7e-4784-a6bd-7c9ef2870509.jfif" alt="Message 9" />
+        <div class="card-title">MATT</div>
+      </a>
+      <a href="#message10" class="card">
+        <img src="https://raw.githubusercontent.com/dyfiam/cso/refs/heads/main/0a189157-7f0f-46f7-882e-e99239cfecad.jfif" alt="Message 10" />
+        <div class="card-title">MARIA</div>
+      </a>
+      <a href="#message11" class="card">
+        <img src="https://raw.githubusercontent.com/dyfiam/cso/refs/heads/main/b2b86a8c-3c90-4023-9ed1-ba192f7338aa.jfif" alt="Message 11" />
+        <div class="card-title">ANNIKA</div>
+      </a>
+      <a href="#message12" class="card">
+        <img src="https://raw.githubusercontent.com/dyfiam/cso/refs/heads/main/fbd7d97f-93c6-4da2-b9b7-70a857313317.jfif" alt="Message 12" />
+        <div class="card-title">ATE KAREN</div>
+      </a>
+      <a href="#message13" class="card">
+        <img src="https://raw.githubusercontent.com/dyfiam/cso/refs/heads/main/c9812dd1-abfe-4d55-98a1-75a7e248bba2.jfif" alt="Message 13" />
+        <div class="card-title">SANDRINE</div>
+      </a>
+      <a href="#message14" class="card">
+        <img src="https://raw.githubusercontent.com/dyfiam/cso/refs/heads/main/b9ec4ccf-c325-4bd8-8edc-5d8d65314ffa.jfif" alt="Message 14" />
+        <div class="card-title">HIENZEL</div>
+      </a>
+      <a href="#message15" class="card">
+        <img src="https://raw.githubusercontent.com/dyfiam/cso/refs/heads/main/3860bdfe-d3a3-4911-93ed-b46ea2fbb280.jfif" alt="Message 15" />
+        <div class="card-title">JAHAILE</div>
+      </a>
+      <a href="#message16" class="card">
+        <img src="https://raw.githubusercontent.com/dyfiam/cso/refs/heads/main/777b8b13-80ba-4841-9783-566f9e632ae7.jfif" alt="Message 16" />
+        <div class="card-title">MARKY</div>
+      </a>
+      <a href="#message17" class="card">
+        <img src="https://raw.githubusercontent.com/dyfiam/cso/refs/heads/main/24f63c85-0ea1-4a5f-bacf-befac11d1cc2.jfif" alt="Message 17" />
+        <div class="card-title">PRECIOUS</div>
+      </a>
+      <a href="#message18" class="card">
+        <img src="https://raw.githubusercontent.com/dyfiam/cso/refs/heads/main/66fde397-a029-41bf-9356-e23ba530dbd3.jfif" alt="Message 18" />
+        <div class="card-title">ADAM</div>
+      </a>
+      <a href="#message19" class="card">
+        <img src="https://raw.githubusercontent.com/dyfiam/cso/refs/heads/main/020c7d26-0244-43fa-9d69-3873d8af6964.jfif" alt="Message 19" />
+        <div class="card-title">LINUS</div>
+      </a>
+      <a href="#message20" class="card">
+        <img src="https://raw.githubusercontent.com/dyfiam/cso/refs/heads/main/dc67bb82-c6a4-467d-946a-81f8213b7c2d.jfif" alt="Message 20" />
+        <div class="card-title">DORAINE</div>
+      </a>
+    </div>
+  </section>
+
+  <section id="message1" class="individual-section hidden">
+    <h2>Ms. Cheryl</h2>
+    <p>Where do I even begin to express my gratitude for everything you've done for us? You've been more than just an adviser namo - you've been a mom, a friend, and a guiding light in our journey sa senior high. Your unwavering support, guidance, and love have shaped us into the individuals we are today.
+
+Thank you for believing in us, even when we didn't believe in ourselves. Thank you for not giving up on us, even when the road ahead seemed uncertain. Your faith in us has been a constant source of strength, and we're forever grateful that you never gave up on us miss, even when others did.
+
+As your anak, I want you to let you know that we're here for you, the same way you are here for all of us. When things get rough, and the weight of the world feels overwhelming, please know that you can rely on us. We're your support system, and your safe space.
+
+Thank you for being our rock, our paper, and our scissors HAHAHAHAHAH charis. I thank you so much miss :( Your impact on our lives goes beyond words can express. We're honored to have you in our lives, and we promise to make you proud. Please pa standbya gihapon kos imo desk miss uwu. I LOVE YOU MISS CHERYL!!!
+
+We love you, Miss Cheryl, more than words can say. You're not just an adviser; you're family.</p>
+    <a href="#individual-section-buttons" class="back-button">← Home</a>
+  </section>
+
+  <section id="message2" class="individual-section hidden">
+    <h2>Pres Yohan</h2>
+    <p>PRESSSSSS,
+I'm still in awe of the strength and resilience you've shown throughout your journey as the president of our org. Your leadership has inspired me and everyone else to push beyond our limits, to believe in myself, and to never give up. But what I admire most nimo noh is the way you've held on to your convictions, even when the road ahead seemed rocky. Bilib kaayo ko nimo, pres. You handled so many struggles that you shouldn't even have to carry pero, you did. It was hard pero you persevered which makes me certain on why you're my role model.
+
+You saw something in me that I didn't even see in myself, and you believed in me when I needed it most.I'll never forget the impact you've had on my life.
+
+What I want you to know is that your struggles, your pain, and your achievements haven't gone unnoticed. I've witnessed your strength, your courage, and your heart, and I'm deeply moved by it. You're more than just a president sa cso to me; you're a source of inspiration, a reminder that we can overcome anything as long as we hold on to hope.
+
+Thank you for being a example of what it means to live with purpose and conviction. Thank you for not giving up on yourself, even when it seemed like the whole world was against you. Your story is a testament to the power of strength and hope, and I'm honored to have been a part of your journey.
+
+I'll always look up to you, not just as a leader, but as a person who embodies the values of compassion, empathy, love, and strength. Thank you for being you, President Yohan. LABLAB!!
+.</p>
+    <a href="#individual-section-buttons" class="back-button">← Home</a>
+  </section>
+
+  <section id="message3" class="individual-section hidden">
+    <h2>VP KAT</h2>
+    <p>KATRINAAAAAAAAAAA, I'm so grateful for the time we spent together as officers. Your kindness, empathy, and understanding made everyone feel seen and heard.
+
+I've admired your strength and calmness, especially in times when things got tough and rowdy. You've shown me that leadership isn't just about titles; it's about heart, compassion, and service. Your willingness to listen, to guide, and to support us has meant the world.
+
+As we move forward, I want you to know that I'll carry the memories we made together with me. The laughter, the tears, the late-night conversations padung uli - they've all shaped me in ways I never thought possible. Thank you for being a constant source of encouragement and support to me and for understanding me, even if it was exhausting na.
+
+I'm so proud of the person you are, Kat. Your heart for service, your passion for helping others, and your unwavering commitment to what’s right - it’s truly inspiring. Keep shining your light.
+
+Take care of yourself, Kat. You deserve all the love and care in the world. Know that you'll always have a special place in my heart, and I'll be rooting for you every step of the way. PS: Good luck with UP! And if you need your chika mate, I'll always be here!
+</p>
+    <a href="#individual-section-buttons" class="back-button">← Home</a>
+  </section>
+
+  <section id="message4" class="individual-section hidden">
+    <h2>VP Klaiza</h2>
+    <p>I'm so grateful for the time we spent together.I admire your strength, and your compassion - you're a true friend who doesn't think twice about telling us the things we need to hear.
+
+One thing that has always stood out about you is your ability to stand firm on your ground, yet remain open to growth and learning. Your conviction and values are truly admirable, and they've inspired me to be more grounded and confident in my own beliefs.
+
+What I admire most about you, though, is your emotional intelligence and connection. You have this incredible ability to understand and empathize with others, and it's something I've experience firsthand that I'm so thankful for. Your heart is full of love and care for others, and it's something that makes you an extraordinary person.
+
+You're a great person with a great heart, Klaiza. Your spark, your energy, and your passion are contagious, and you've lit up the heart sa ato organization. I hope you never lose that spark - it's what makes you, you. Keep shining your light, and know that you'll always have a special place in my heart.</p>
+    <a href="#individual-section-buttons" class="back-button">← Home</a>
+  </section>
+
+  <section id="message5" class="individual-section hidden">
+    <h2>Sec Fionah,</h2>
+    <p>FIONAURRRRR, You’ve honestly been one of the brightest, loudest, and most unforgettable people I’ve ever met — in the best way possible syempre. Your energy is infectious, your jokes are top-tier (even the corny jokes nimo), and you somehow manage to bring both chaos and comfort into every conversation we have. 
+
+But beyond the laughter and your amazing sense of humor, there’s a side of you that not everyone always sees right away — the side that listens deeply, that overthinks sometimes because you care too much, and that carries a quiet strength behind all the noise. That’s the papart I’ve come to admire.
+
+You’ve got this mix of being fun and fierce, but also incredibly thoughtful and grounded. You know when to turn the volume up and when to sit quietly and hold space for someone. And that balance? That maturity? It’s something I deeply respect.
+
+You’ve made me laugh, made me feel heard, and reminded me that it’s okay to care deeply — even if it comes with a little worry. Your heart is so big, Fionah, and it’s impossible not to feel safe and seen around you.
+
+Please don’t ever change. Keep being loud. Keep being funny. Keep worrying about people even if you pretend you’re not. It all makes you, you— and that’s someone I’m truly grateful to know. LET'S GO PAPARTTTTT</p>
+    <a href="#individual-section-buttons" class="back-button">← Home</a>
+  </section>
+
+  <section id="message6" class="individual-section hidden">
+    <h2>ASS. SEC JENNY</h2>
+    <p>JENNYYYY, You already know this, but I just want to say it anyway — you’re one of the most badass and genuinely inspiring people I’ve met. You’re loud, funny, and full of life — but also fierce, focused, and full of heart. 
+
+I’ve seen how much you’ve gone through — the struggles, the weight you carry, the things you never even say out loud — and yet, you’re still here. Still fighting. Still laughing. Still leading. That’s something I truly, deeply admire about you. You’re strong, Jenny. Like, really strong. And whether you see it or not, everyone around you feels it.
+
+Also, can we just acknowledge that despite being  "gwapa gwapa ra"(matud pa ni sandrine HAHAHHAHA), we both know you’ve got more than just looks going for you. Bright kaayo ka. You’ve got the brains, the skill, the wit — and the heart to back it all up.
+
+As you enter 10th Congress (wow, double digits na jud 😭), I just want to wish you all the love and luck in the world. I know you’re gonna handle it like you always do — head high, heart strong, and with that signature Jenny maldita look that somehow keeps everyone intrigued.
+
+Keep pushing, keep shining, and please never lose that fire in you. You’re doing better than you think. And I’m always rooting for you.</p>
+    <a href="#individual-section-buttons" class="back-button">← Home</a>
+  </section>
+
+  <section id="message8" class="individual-section hidden">
+    <h2>Graphic Designer Richard</h2>
+    <p>TO OUR GRAPHIC ORGANIZER, I want to take a moment to truly appreciate the incredible skills and qualities you bring to everything you do. Your talent in graphic designing and editing is SUPER WOWWWW.
+
+Beyond your skills, what makes you truly special is the way you carry yourself. You may be quiet and reserved at first, but you have this wonderful sense of humor that catches people by surprise — always lightening the mood and bringing genuine smiles to those around you when we actually get close to you. Your jolly spirit, even in subtle ways, is contagious and admirable, and it adds warmth to every interaction.
+
+What I also want to highlight is your empathy. You have an incredible ability to listen and understand others, to pick up on feelings that aren’t always spoken aloud. It’s a rare gift that makes you not only a great colleague but a trusted friend. Your kindness and thoughtfulness create an environment where people feel safe and supported, and that’s truly invaluable.
+
+In many ways, you’re the perfect balance — calm and mahinhin on the outside, but with a quiet energy and a heart that cares deeply. You let your work and your actions speak louder than words, and it’s clear to anyone who knows you that you bring so much more than just talent to the table.
+
+It’s been an absolute pleasure to work with you and getting to know you better even though we got truly acquainted pag second sem na. I’m excited to see where your skills and your heart will take you next because you have all the tools to achieve great things. GOOD LUCK RICHARDIEEEEEE! ILYYYYYYY</p>
+    <a href="#individual-section-buttons" class="back-button">← Home</a>
+  </section>
+
+  <section id="message7" class="individual-section hidden">
+    <h2>Layout Artist Hannah</h2>
+    <p>Hi HANNAUR, a little appreciation message for being the amazing person that you are.
+
+You’ve always been that loud, funny soul who brings instant energy wherever you go. Like, you don't even have to try — your presence alone already livens up the whole room. Whether it’s you cracking a joke, teasing someone, labaw nas papart HAHAHHAH, or just being your usual bibo self, you’ve got this charm that’s hard to ignore.
+
+But beyond all that fun and chaos you bring sa congress, what I love most about you is your heart. You’re one of the most real, down-to-earth people I know. There’s no plinastikay with you. What you see is what you get — and what you get is someone who’s genuinely kind, thoughtful, and always looking out for others, even if you don’t make a big deal out of it.
+
+And how you manage to be loud and innocent at the same time. You’re out here making everyone laugh their hearts out one minute, then being the most caring ate the next. You’re lowkey matured in ways most people overlook — you feel deeply, you listen, and you notice when people aren’t okay. That softness in you, that care — it’s one of the reasons people feel safe around you. Take care and good luck with college, Hannah! I LOVE YOUUUUUUUU (SORRY NA KANI IMO PIC, WA JD KO KITAG PIC NA KITA DUHA JADBVJADBVK)</p>
+    <a href="#individual-section-buttons" class="back-button">← Home</a>
+  </section>
+
+  <section id="message9" class="individual-section hidden">
+    <h2>CBT CHAIRPERSON MATT</h2>
+    <p>	HI PAPA MATT! Let me just say it straight: THANK YOU KAAYO. For everything. For showing up, for being one of the hearts and souls sa CSO, and for always being there for all of us, in ways that really mattered.
+
+You’ve been more than just our CBT Chairperson. You’ve been a safe space. A hype man. A mentor. A friend. And yeah — a whole papa figure sa among tanan 😭 From the serious things to the most random, chaotic ideas we come up with, you were always the one who said, “Go lang, as long as malipay mo.”  And it meant so much more than you probably know.
+
+You always brought so much joy and good energy into the room — like, it’s impossible not to feel lighter when you’re around. But what makes you even more admirable is that you saw beyond the laughter. you saw the nights we were tired.
+
+You made all of us feel like we mattered. That our voices were heard. That our happiness was valid. And honestly, that’s what made this org feel like home. That’s because of you.
+
+The 9th Congress wouldn’t have been what it was without you. I don’t even want to imagine it without your big heart, pushing us forward, and holding us together. We laughed, cried, argued (sometimes 😅), but through it all, you stayed. You gave so much of yourself — and I just hope you know how deeply grateful I am.
+
+Thank you, Matt. For the constant reassurance. For checking up on us. For reminding us that we’re capable. And most of all, for loving the org and the people in it the way you did.
+
+LOVE U PA UNTA MAKAUYAB NAKA PARA NAA NAKOY MAMA</p>
+    <a href="#individual-section-buttons" class="back-button">← Home</a>
+  </section>
+
+  <section id="message10" class="individual-section hidden">
+    <h2>VICE CHAIR MARIA</h2>
+    <p>HI MARIAAAAA, Haaay where do I even start with you? 😭 First of all, thank you for just being you — loud, unfiltered, hilarious, and being very prangka. speaking of singing... girl. Your voice?? Literal chills jd permi. You’re insanely talented and it’s always a privilege to hear you sing — even if it’s just you casually belting something random like naa kas concert HAHHAHAHA.
+
+But beyond the loud laughs, powerful voice, and unfiltered nimo na mga iingon, I just want to say how much I appreciate your heart. You’re one of the most genuine people I know- just pure, honest Maria. And I love that about you.
+
+Also, let’s not forget — masakiton twins jd ta😭 We really out here surviving life one ubo at a time HAHAHAHAHA. It’s weirdly comforting to know someone else gets it — like, we can laugh about the pain (literally) and still push through together. And I see that in you — you’ve been through so much, but you still show up with laughter, strength, and love. That’s something not a lot of people can do.
+
+So thank you — for the realness, for the energy, for the love, and for the voice that honestly deserves maabot sa the voice kids. You’ve made this journey so much more memorable just by being in it. Keep being your loud, funny, soft-hearted self — you’re unforgettable, Maria.
+
+Best Wishes, Mariaaa! Laham kita bisan kusog kayka mangaway</p>
+    <a href="#individual-section-buttons" class="back-button">← Home</a>
+  </section>
+
+  <section id="message11" class="individual-section hidden">
+    <h2>FINANCE OFFICER ANNIKA</h2>
+    <pHi Miss Intrams (aka Annika 🤭),
+
+Okay let’s just put it out there — yes, you’re pretty. Like, SO pretty. But let’s also be real: you’re also one of the weirdest people I know... in the best, most chaotic way possible 😭
+
+You’ve got this supermodel face pero the moment you open your mouth, it’s either something completely random, oddly specific, or very weirdo ang peg HAHAHHAHA— pero that’s why we love you. You’re the perfect mix of grace and weirdo energy. And somehow, it works.
+
+I’ll never understand how someone can go from Miss Universe ang wosh to sending the most cursed memes or making the most weird facial expressions mid-conversation. You're a walking plot twist, and honestly? Life would be so boring without your weirdness.
+
+But jokes aside — I really appreciate your presence. You bring so much light and laughter to everyone around you. You’re funny, kind, and genuinely just so fun to be with. You don’t even have to try — people just gravitate toward you because of your energy (and yeah... your face card pd).
+
+So please never change. Stay stunning, stay weird, and keep being thegirlie who can slay a runway one moment and be a total weirdo the next. I LOVE YOU MY DANCERIST, REFILM NATO ANG GNARLY HAAAAAAA</p>
+    <a href="#individual-section-buttons" class="back-button">← Home</a>
+  </section>
+
+  <section id="message12" class="individual-section hidden">
+    <h2>Governor Karen</h2>
+    <p>GOVVVVV, First of all… thank you — for being more than just a council governor or a SocCom kauban sa church, but someone I genuinely trust and deeply appreciate. You’ve always been this calm, mahinhin presence, but what makes you even more iconic is your facial expressions that literally say what you’re thinking before you even talk 😭 Like legit, no need for subtitles… your face IS the subtitle HAHAHAHAHA. And honestly, it’s one of my favorite things about you.
+
+Even with that quiet nature, you’ve always made your presence felt — in the way you support, in the way you listen, and in the way you show up for people. You’re the kind of person who doesn’t need to be loud to make an impact. And I’ve felt that especially in one of my lowest moments — that time I got rushed to Mendero and everything felt like a blur.
+
+You were there. Quiet and steady, but present. I can’t explain how much that meant to me. I felt guilty when you started crying sa ambulance, I hope you don't blame yourself for what happened to me, gov. Just knowing someone like you had my back — someone I trust, someone familiar, someone who genuinely cared — made everything feel a little less scary that day, I'm sorry I wasn't able to show you my gratitude that time. You being there gave me comfort I didn’t even realize I needed at the time.
+
+From our SocCom days, where you taught me the basics and running together to take pics, to watching you grow into this incredible leader in the council, I’ve always looked up to you. But more than the titles and roles, what I admire most is your heart. You care so much — and that care shows in everything you do, whether it’s in the work or just in being there for a friend in need.
+
+Thank you for being a constant, for your quiet strength, and for the laughter we’ve shared (especially the times when we try not to show our subtitles sa nawng... but your face already gave it away 😭). You’ve left a mark not just in the council or the org, but in my life. I LOVE YOU GOV KAREN!!!</p>
+    <a href="#individual-section-buttons" class="back-button">← Home</a>
+  </section>
+
+  <section id="message13" class="individual-section hidden">
+    <h2>VG0V SANDRINE</h2>
+    <p>SANDRINEEEE, first of all… bucket ka ganyan? charet HAHAHHAHAHA you’re weird in the most questionable ways, sooo obsessed with yourself (o lage gwapo na lagi ka). I swear, if ang mang sungog kay contest, winner naka.
+
+But despite all the chaos and comedy you bring into every room (and every group chat nato 😭), what most people don’t always see — and what I’m grateful to know — is your heart.
+
+Behind all the noise, jokes, and "tan-aw-a ko" moments, you’re actually one of the most mature and emotionally aware people I know. You carry so much, and you worry a lot — not just about yourself, but about the people you care about. And that says a lot about the kind of person you truly are.
+
+You may be the clown sa congress, but you’re also the one who notices when someone’s off. You listen, you care, and you try your best to make people feel seen — even if it means covering it up with jokes just to make them smile. That’s a kind of love not everyone knows how to give, but you do it naturally.
+
+So yes, you’re loud. You’re weird. You love your own face a little too much 😩. But you’re also thoughtful, self-aware, and full of heart — and I honestly wouldn’t change a thing about you. You bring color to every space you’re in, and we’re all better (and more entertained) because of it.
+
+Thank you for the laughs, the noise, the weirdness — and most of all, for the quiet care behind it all. GOOD LUCK WITH COLLEGE DRINE, PAG BAG-O NA HAHAHAHAHHAHAH</p>
+    <a href="#individual-section-buttons" class="back-button">← Home</a>
+  </section>
+
+  <section id="message14" class="individual-section hidden">
+    <h2>Partylist Sec Hienzel</h2>
+    <p>HI DASHING PENGUIN HAHAHHAHA, I don’t know how to describe you without mentioning your very weird katawa HAHAHHAHAHAH — like, seryoso, once you start laughing, it’s game over for everyone around you kay utro napud mi gakatawa.
+
+You’ve got this energy that’s equal parts chaotic and brilliant. One second you're being the funny one, making everyone laugh with the most random comments and jokes — and then the next moment you're explaining something smart that leaves us all like, “Hala, bright diay ni siya na pagka grade 7 oh", joke HAHAHHAHAHA.
+
+It’s been such a joy being around you — your small but mighty presence always leaves an impression, and I really admire how you carry both your humor and your intellect so effortlessly. You’re weird in the best possible way, and I hope you never change that.
+
+Also!! I just wanna say — I’m super excited na muadto kag Japan. I know it's a big step, but if there’s anyone who can thrive and take on a whole new world with confidence, it’s you. So go chase that dream, take your weird laugh with you, and show the world what you're made of. LABYU ZELLL
+
+Wishing you all the best in that exciting chapter ahead — you got this, always 💖</p>
+    <a href="#individual-section-buttons" class="back-button">← Home</a>
+  </section>
+
+  <section id="message15" class="individual-section hidden">
+    <h2>12 STEM REP JAHAILE</h2>
+    <p>HELLO JAH, the pride of CSO 9th Congress. Like fr fr. We’ve all seen it — the athleticism, the charm, the "campus crush" aura kunohay pero sa yads department nuon. But what makes you stand out even more is that you're not just all that on the outside — you're also super down to earth, and that’s what makes people gravitate toward you even more.
+
+Yes, you’re conyo. Like very. IADMIT NANA JAHAILE!!!  But honestly? That’s your trademark.Bisan usahay samokan ka (and you know it HAHAHA), it’s always the fun kind. You bring the right kind of energy — the one that makes people laugh, feel light, and enjoy the moment.
+
+But beyond the athlete-slash-tiktoker-slash-CSO pride identity, you’ve shown us what it means to be grounded. You never let the titles or recognition get to your head — instead, you kept showing up for the org, the team, and the people around you with humility and good vibes (and endless samok2).
+
+You’ve made the 9th Congress experience so much more fun and memorable just by being your samokan, driven, slightly conyo self. So thank you — for being you. Keep breaking ankles (on the court) and expectations (always). And please never lose that goal driven heart that makes you who you are. LOVE YOU JAHHHH!!! SO PROUD OF YOU</p>
+    <a href="#individual-section-buttons" class="back-button">← Home</a>
+  </section>
+
+  <section id="message16" class="individual-section hidden">
+    <h2>11 STEM REP MARKY</h2>
+    <p>HI MARKYYYYY our kusog mututok HAHAHHAHAHA, You're honestly one of those people na mura ug villain sa salida pero actually ikaw diay ang pinaka-caring sa tanan HAHAHAHAHA.
+
+You’re so loud, and your vibe is always giving life to every room you enter. You’ve got that main character energy — dramatic, hilarious, slightly over-the-top, but also super sincere when it matters most.
+
+Behind all that sass and sarcasm, you're one of the most thoughtful people I know. You care deeply — like, more than you let on sometimes — and it's obvious in the way you check in on people, make them laugh when they need it most, and offer comfort in your own Marky-style way (na pahilakon ko).
+
+Thank you for being that kind of friend — the one who makes everything 10x more fun, more chaotic, but also more meaningful. You’ve got a big heart behind that maldito face, and we all see it.
+
+Never stop being the loud, caring, fabulous, funny soul that you are. The world needs more Markys, fr.I LOVE YOU MARKYY</p>
+    <a href="#individual-section-buttons" class="back-button">← Home</a>
+  </section>
+
+  <section id="message17" class="individual-section hidden">
+    <h2>12 HUMSS REP PRESHY</h2>
+    <p>HI PRECIOUS, you’re honestly one of the funniest, smartest, and most sarcastic people I’ve ever met. Sometimes I don’t know whether to laugh or be scared nimo, pero either way, you always keep things interesting.
+
+You’ve got this sharp tongue that can cut through any situation, but behind all those savage jokes and quick comebacks is a really smart and thoughtful person. You say what everyone’s thinking, but with that extra spicy twist that only Precious can deliver na walay sugarcoat.
+
+What I admire most is how you use your humor not just to make people laugh, but to connect with them in a way that’s real and honest. It’s not just jokes for the sake of it — there’s heart in there too, even if you try to hide it behind that maldita mask.
+
+Thank you for always keeping it real, for making me laugh even on the toughest days, and for being unapologetically you. Don’t ever lose that edge — it’s what makes you, well, Precious. And you've been fighting one of the strongest battles and I admire you so much for still persevering despite what you're going through. Thank you so much for being an inspiration, Presh. Never lose your spark, omki? LOVE YOU!!!</p>
+    <a href="#individual-section-buttons" class="back-button">← Home</a>
+  </section>
+
+  <section id="message18" class="individual-section hidden">
+    <h2>11 HUMSS REP ADAM</h2>
+    <p>ADAMSKIEEE, Grabe gyud ka kaweird, but in the best way possible! Your sense of humor — sobra ka sungogan pareha ni Sandrine — usahay di na ko kasabot kung magkatawa ba ko or sapoton because it’s just so unexpected. Pero that’s exactly why you’re one of the most fun people to be around. You bring that unique, offbeat energy that lightens up even the most boring moments.
+
+Pero aside from being this weird and funny dude, naa pud kay heart that's very caring towards everyone. You’re the type of friend nga maski sungogan or mag joke-joke, naa gihapon kay time para maminaw ug motabang kung kinsa man nang nanginahanglan. You’re like the silent type of caring — dili kaayo showy pero sure ka nga naa ra diha para nimo.
+
+That mix of sungogan humor and genuine concern is honestly rare, and I feel lucky nga naa ka sa life nako. You can crack the funniest jokes, but you can also be serious when it really matters. Mao na, you balance things out perfectly — dili ka boring, pero dili sad ka sobra ka serious.
+
+Thank you for always being your weird, caring, and sungogan self. You make life lighter and better just by being around, and I hope you know how much you’re appreciated. Don’t ever change that unique mix of imong personalidad, kay that’s exactly what makes you, you.
+
+Looking forward to more laughs, more weird jokes, and more moments with you. Thank you for your service and for being one of the best people I've met. LOVE YOU DAMMMM</p>
+    <a href="#individual-section-buttons" class="back-button">← Home</a>
+  </section>
+
+  <section id="message19" class="individual-section hidden">
+    <h2>12 ABM REP LINUS</h2>
+    <p>HI NARCISSIST, From your loud laughs to your nonstop thirst trap posts, wala gyud ka kahunong pagpakita sa imong self-love no? Obsessed with yourself? TUMPAK! pero we all know you deserve every bit of it. You’re the kind of person who owns everything about you, and that confidence is honestly inspiring.
+
+Ikaw ang eldest sa congress, pero honestly, you’re the most babied one HAHAHAHHAHA. Murag di ka jud makatakas sa pagka-princess nimo diri sa council — but that’s part of your charm. You have this crazy energy that fills every room, and you do it all with a heart full of care.
+
+What I really appreciate about you, though, is that even if you’re loud, shameless, and full of energy, you’re also deeply caring when it counts. You’re the type to check up on friends when they’re down, to listen when someone needs to talk, and to be there even if you don’t always show it in the usual way. You know when to turn off the spotlight and just be genuinely present for people — and that’s something not everyone can do.
+
+You remind us all that being unapologetically yourself — loud, proud, and yes, even a little extra — can go hand in hand with real care and loyalty. So keep shining, keep posting those thirst traps, but never forget that your heart is just as big as your personality. I LOVE YOU LI, TANAW NYA TA WICKED PART 2 HA WATCH OUT</p>
+    <a href="#individual-section-buttons" class="back-button">← Home</a>
+  </section>
+
+  <section id="message20" class="individual-section hidden">
+    <h2>11 ABM REP DORAINE</h2>
+    <p>Hi babeeee, I just want to take a moment to say thank you — really, from the bottom of my heart. You’re one of the smartest people I know, and yet you have this super nonchalant vibe that makes everything around you feel calm and easy. 
+
+What I admire most is how caring you are, even though you keep things lowkey. You’re always there, quietly supporting and making people feel appreciated without making a big fuss about it. And honestly, you’re so easy to please, which makes being around you a breath of fresh air.
+
+And hey, thank you for putting up with my crazy personality. I know I can be a lot sometimes — loud, emotional, all over the place — but you’ve been patient, understanding, and kind through it all. I really appreciate that more than words can say.
+
+You’ve been such a steady, calming presence, and our friendship means so much to me. I hope you know how sincerely grateful I am to have you in my life.
+
+Thank you for being you — smart, chill, caring, and just absolutely wonderful.To more jeepney rides padung uli! I love you dorrrrr!!!</p>
+    <a href="#individual-section-buttons" class="back-button">← Home</a>
+  </section>
+
+
+  <audio id="audio-player" autoplay loop>
+  <source src="https://raw.githubusercontent.com/dyfiam/cso/main/Rivermaya%20-%20Balisong%20(lyrics).mp3" type="audio/mpeg">
+</audio>
+
+
+  <script>
+    const audio = document.getElementById('audio-player');
+    const playButton = document.getElementById('play-music');
+
+    playButton.addEventListener('click', () => {
+      audio.play();
+      playButton.style.display = 'none';
+    });
+
+    function handleHash() {
+      const hash = location.hash.slice(1);
+      if (!hash || hash === 'main' || hash === 'individual-section-buttons') {
+        document.getElementById('main').classList.remove('hidden');
+        document.getElementById('individual-section-buttons').classList.remove('hidden');
+        document.querySelectorAll('.individual-section').forEach(s => s.classList.add('hidden'));
+      } else {
+        document.getElementById('main').classList.add('hidden');
+        document.getElementById('individual-section-buttons').classList.add('hidden');
+        document.querySelectorAll('.individual-section').forEach(s => s.classList.add('hidden'));
+        const target = document.getElementById(hash);
+        if(target) target.classList.remove('hidden');
+      }
+    }
+
+    window.addEventListener('hashchange', handleHash);
+    window.addEventListener('load', handleHash);
+
+    // Floating hearts animation
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }
+    setInterval(createHeart, 500);
+  </script>
+</body>
+</html>
